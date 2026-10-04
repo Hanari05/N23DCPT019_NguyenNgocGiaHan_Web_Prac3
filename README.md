@@ -1,6 +1,9 @@
 # N23DCPT019 – Nguyễn Ngọc Gia Hân – Web Prac 3
 
 ## Lab 3: Fullstack Integration (Next.js + Express)
+**Sinh viên:** Nguyễn Ngọc Gia Hân · **MSSV:** N23DCPT019  
+**Học phần:** Lập trình Web  
+**Chủ đề:** Kết nối Frontend NextJS với Backend Express để quản lý giỏ hàng / sản phẩm
 
 ### Cấu trúc
 
