@@ -59,6 +59,7 @@ app.use((req, _res, next) => {
   console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
   next();
 });
+
 // Frontend gọi qua proxy Next.js (cùng origin) nên CORS chỉ là lớp dự phòng
 app.use(
   cors({
@@ -67,6 +68,7 @@ app.use(
     allowedHeaders: ['Content-Type'],
   })
 );
+
 app.use(express.json());
 
 // ─── Validation ──────────────────────────────────────────────────────────────

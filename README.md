@@ -17,6 +17,8 @@ frontend/
 ├── components/                     # Header (badge giỏ), Dialog, ProductDialog, ConfirmDialog
 ├── lib/                            # api.ts (axios), queries.ts (React Query), types, format
 └── next.config.ts                  # Proxy /api/* → Express
+screenshots/
+└── cors-error.png                  # Bằng chứng lỗi CORS (Bước 2, Tiết 1)
 ```
 
 ### Chạy
@@ -43,9 +45,32 @@ Mở http://localhost:3000/products
 | Nâng cao 3 | Lưu `data.json` bằng `fs.promises`, có hàng đợi ghi để tránh ghi đè |
 | Nâng cao 4 | Cart: GET/POST/PATCH/DELETE, badge số lượng ở header, trang `/cart` |
 
-### Bước 2 – tái hiện lỗi CORS (để chụp màn hình)
+### Bước 2 – Tái hiện lỗi CORS
 
-1. Trong `frontend/lib/api.ts` đặt `baseURL: 'http://localhost:5000'`.
-2. Trong `backend/server.js` comment khối `app.use(cors(...))`, restart backend.
-3. Mở `/products`, xem lỗi ở DevTools → Console, chụp màn hình.
-4. Khôi phục cả hai chỗ trên.
+**Cách làm:**
+
+1. Trong `frontend/lib/api.ts`, tạm đặt `baseURL: 'http://localhost:5000'`.
+2. Trong `backend/server.js`, comment khối `app.use(cors({...}))`, giữ nguyên `app.use(express.json())` đứng ngoài khối comment, rồi restart backend.
+3. Mở `http://localhost:3000/products`. Bật **Disable cache** trong tab Network của DevTools rồi tải lại cứng (Ctrl+Shift+R) — nếu không, trình duyệt có thể vẫn dùng phản hồi cũ (kèm header CORS cũ) trong cache và không hiện lỗi mới.
+4. Console hiện lỗi dạng:
+
+   > Access to XMLHttpRequest at 'http://localhost:5000/api/products' from origin 'http://localhost:3000' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+
+   Ảnh chụp: `screenshots/cors-error.png`.
+
+5. Khôi phục: bỏ comment `cors()`, restart backend; đặt lại `baseURL` rỗng trong `api.ts`.
+
+**Lỗi xảy ra ở phía nào?** Ở trình duyệt (client). Gọi trực tiếp API bằng `curl` lúc đó vẫn nhận `200 OK` và đủ dữ liệu JSON — nghĩa là server nhận và xử lý request bình thường. Trình duyệt mới là bên chặn: nó không cho JavaScript của trang đọc phản hồi, vì phản hồi thiếu header `Access-Control-Allow-Origin` xác nhận origin `http://localhost:3000` được phép truy cập.
+
+### Checklist nộp bài
+
+- [x] Backend chạy cổng 5000, có đủ GET / POST / PUT / DELETE cho products, và GET / POST / PATCH / DELETE cho cart
+- [x] Frontend gọi API thành công qua proxy, không lỗi CORS khi chạy bình thường
+- [x] Form thêm sản phẩm hoạt động đúng, có validation
+- [x] Sửa sản phẩm (PUT) qua dialog có sẵn giá trị
+- [x] Nút Xóa với Optimistic Update + rollback khi lỗi (không cần tải lại trang)
+- [x] Giỏ hàng: thêm, đổi số lượng, xóa, badge cập nhật tức thì
+- [x] Toast thông báo đầy đủ khi thêm / sửa / xóa / lỗi
+- [x] Dữ liệu lưu vào `data.json`, không mất khi restart server
+- [x] Đã tái hiện và chụp lại lỗi CORS (xem mục trên)
+- [x] Không có lỗi đỏ trong Console và Terminal khi chạy bình thường
