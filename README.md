@@ -1,11 +1,9 @@
-# N23DCPT019 – Nguyễn Ngọc Gia Hân – Web Prac 3
-
-## Lab 3: Fullstack Integration (Next.js + Express)
+# Lab 3: Fullstack Integration (Next.js + Express)
 **Sinh viên:** Nguyễn Ngọc Gia Hân · **MSSV:** N23DCPT019  
 **Học phần:** Lập trình Web  
 **Chủ đề:** Kết nối Frontend NextJS với Backend Express để quản lý giỏ hàng / sản phẩm
 
-### Cấu trúc
+## Cấu trúc
 
 ```
 backend/
@@ -24,7 +22,7 @@ screenshots/
 └── cors-error.png                  # Bằng chứng lỗi CORS (Bước 2, Tiết 1)
 ```
 
-### Chạy
+## Chạy
 
 ```bash
 # Terminal 1
@@ -35,7 +33,7 @@ cd frontend && npm install && npm run dev     # http://localhost:3000
 
 Mở http://localhost:3000/products
 
-### Đã làm
+## Đã làm
 
 | Phần | Nội dung |
 |------|----------|
@@ -65,7 +63,7 @@ Mở http://localhost:3000/products
 
 **Lỗi xảy ra ở phía nào?** Ở trình duyệt (client). Gọi trực tiếp API bằng `curl` lúc đó vẫn nhận `200 OK` và đủ dữ liệu JSON — nghĩa là server nhận và xử lý request bình thường. Trình duyệt mới là bên chặn: nó không cho JavaScript của trang đọc phản hồi, vì phản hồi thiếu header `Access-Control-Allow-Origin` xác nhận origin `http://localhost:3000` được phép truy cập.
 
-### Checklist nộp bài
+## Checklist nộp bài
 
 - [x] Backend chạy cổng 5000, có đủ GET / POST / PUT / DELETE cho products, và GET / POST / PATCH / DELETE cho cart
 - [x] Frontend gọi API thành công qua proxy, không lỗi CORS khi chạy bình thường
